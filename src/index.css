@@ -1,0 +1,12 @@
+/* Reset default Vite template styles to let our custom Government mockup styles take over */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
