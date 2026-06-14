@@ -27,7 +27,7 @@
   padding: 12px 24px;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1010;
 }
 .site-header .header-inner {
   max-width: 1200px;
@@ -107,21 +107,29 @@
 .header-search input {
   flex: 1;
   height: 40px;
-  border: 1px solid #3a3a3a;
-  border-right: none;
+  border: none;
+  border-bottom: 2px solid #000091;
+  background-color: #eee;
   padding: 8px 16px;
   font-family: inherit;
   font-size: 14px;
   outline: none;
-  border-radius: 4px 0 0 4px;
+  border-radius: 4px 0 0 0;
 }
-.header-search input:focus { border-color: #000091; box-shadow: 0 0 0 2px rgba(0,0,145,0.2); }
+.header-search input::placeholder {
+  font-style: italic;
+  color: #666;
+}
+.header-search input:focus {
+  background-color: #f0f0f0;
+  box-shadow: 0 0 0 2px rgba(0,0,145,0.2);
+}
 .header-search button {
   height: 40px;
   width: 48px;
   background: #000091;
   border: none;
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 4px 0 0;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -565,19 +573,20 @@ footer {
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  z-index: 1100;
   box-shadow: 0 2px 8px rgba(0,0,0,0.25);
 }
 .btn-back-top.visible { display: flex; }
 .btn-back-top svg { width: 20px; height: 20px; fill: #fff; }
 .btn-back-top:hover { background: #1212ff; }
 
-.btn-question {
+.fiche-body a.btn-question {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  background: #000091;
-  color: #fff;
+  background-color: #000091 !important;
+  background-image: none !important;
+  color: #fff !important;
   border: none;
   border-radius: 40px;
   padding: 12px 16px 12px 20px;
@@ -587,12 +596,17 @@ footer {
   display: flex;
   align-items: center;
   gap: 10px;
-  z-index: 999;
+  z-index: 1100;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   font-family: inherit;
-  text-decoration: none;
+  text-decoration: none !important;
 }
-.btn-question:hover { background: #1212ff; }
+.fiche-body a.btn-question:hover {
+  background-color: #1212ff !important;
+  background-image: none !important;
+  color: #fff !important;
+  text-decoration: none !important;
+}
 .btn-question .q-circle {
   width: 22px;
   height: 22px;
@@ -847,9 +861,10 @@ footer {
   font-size: 10px;
   font-weight: 700;
 }
-.btn-question-v2 {
-  background: #000091;
-  color: #fff;
+.fiche-body a.btn-question-v2 {
+  background-color: #000091 !important;
+  background-image: none !important;
+  color: #fff !important;
   border-radius: 40px;
   padding: 12px 16px 12px 20px;
   font-size: 15px;
@@ -858,9 +873,14 @@ footer {
   align-items: center;
   gap: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  text-decoration: none;
+  text-decoration: none !important;
 }
-.btn-question-v2:hover { background: #1212ff; }
+.fiche-body a.btn-question-v2:hover {
+  background-color: #1212ff !important;
+  background-image: none !important;
+  color: #fff !important;
+  text-decoration: none !important;
+}
 .q-circle-v2 {
   width: 22px;
   height: 22px;
@@ -969,7 +989,7 @@ footer {
   .footer-grid { grid-template-columns: 1fr; gap: 24px; }
   .sub-footer-grid { grid-template-columns: 1fr; }
   .sub-footer-left { flex-wrap: wrap; }
-  .btn-question { font-size: 13px; padding: 10px 12px 10px 16px; }
+  .fiche-body a.btn-question { font-size: 13px; padding: 10px 12px 10px 16px; }
   .inscriptions-block { flex-direction: column; }
   .inscriptions-label { width: 100%; }
   .inscriptions-content { width: 100%; }

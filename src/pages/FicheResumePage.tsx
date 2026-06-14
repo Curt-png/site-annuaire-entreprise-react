@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { SiteHeader } from '../components/SiteHeader';
 import { SiteFooter } from '../components/SiteFooter';
 import { BackToTop } from '../components/BackToTop';
+import { entreprise } from '../config/entreprise';
 
 /* ── helpers ── */
 function copyToClipboard(text: string) {
@@ -52,7 +53,7 @@ function FicheResumeContent({ onNavigate }: { onNavigate?: (page: 'fiche-resume'
         <div className="section-legal-v2-header">
           <div className="sl-title">
             <div className="sl-indicator" />
-            <h2>Informations légales de Prestige Auto</h2>
+            <h2>Informations légales de {entreprise.denomination}</h2>
           </div>
           <div className="source-logos-v2">
             <span className="sl-logo-text">InseeM</span>
@@ -77,7 +78,7 @@ function FicheResumeContent({ onNavigate }: { onNavigate?: (page: 'fiche-resume'
                   <span className="check-circle-green">✔</span>
                   <span className="ins-text">Inscrite (Insee)</span>
                 </span>
-                <span className="ins-date">le 05/11/2020</span>
+                <span className="ins-date">le {entreprise.dateCreation}</span>
               </div>
             </div>
             <div className="ins-row mt-12">
@@ -86,7 +87,7 @@ function FicheResumeContent({ onNavigate }: { onNavigate?: (page: 'fiche-resume'
                   <span className="check-circle-green">✔</span>
                   <span className="ins-text">Immatriculée au RNE (INPI)</span>
                 </span>
-                <span className="ins-date">le 19/06/2023</span>
+                <span className="ins-date">le {entreprise.dateImmatriculationRne}</span>
               </div>
             </div>
           </div>
@@ -94,16 +95,16 @@ function FicheResumeContent({ onNavigate }: { onNavigate?: (page: 'fiche-resume'
 
         <table className="data-table-v2">
           <tbody>
-            <tr><td>Dénomination</td><td>Prestige Auto</td></tr>
-            <tr><td>SIREN</td><td>800 219 836</td></tr>
-            <tr><td>SIRET du siège social</td><td>800 219 830 00076</td></tr>
-            <tr><td>N° TVA Intracommunautaire</td><td>FR14582260845</td></tr>
+            <tr><td>Dénomination</td><td>{entreprise.denomination}</td></tr>
+            <tr><td>SIREN</td><td>{entreprise.sirenFormate}</td></tr>
+            <tr><td>SIRET du siège social</td><td>{entreprise.siretFormate}</td></tr>
+            <tr><td>N° TVA Intracommunautaire</td><td>{entreprise.tvaIntracommunautaire}</td></tr>
             <tr>
               <td>N° EORI <span className="info-icon-small" style={{ marginLeft: '4px' }}>i</span></td>
               <td><span className="italic-gray">Pas de n° EORI valide</span></td>
             </tr>
-            <tr><td>Activité principale</td><td>Vente de voitures et pièces détachées</td></tr>
-            <tr><td>Date de création</td><td>05/11/2020</td></tr>
+            <tr><td>Activité principale</td><td>{entreprise.activitePrincipale}</td></tr>
+            <tr><td>Date de création</td><td>{entreprise.dateCreation}</td></tr>
           </tbody>
         </table>
       </section>
@@ -132,8 +133,8 @@ function FicheResumeContent({ onNavigate }: { onNavigate?: (page: 'fiche-resume'
 
         <table className="data-table-v2">
           <tbody>
-            <tr><td>Date d'immatriculation</td><td><strong>19/06/2023</strong></td></tr>
-            <tr><td>Date de création de la société</td><td>05/11/2020</td></tr>
+            <tr><td>Date d'immatriculation</td><td><strong>{entreprise.dateImmatriculationRne}</strong></td></tr>
+            <tr><td>Date de création de la société</td><td>{entreprise.dateCreation}</td></tr>
             <tr>
               <td>Capital social <span className="info-icon-small" style={{ marginLeft: '4px' }}>i</span></td>
               <td><span className="italic-gray">Non renseigné</span></td>
@@ -148,7 +149,7 @@ function FicheResumeContent({ onNavigate }: { onNavigate?: (page: 'fiche-resume'
         <div className="section-legal-v2-header">
           <div className="sl-title">
             <div className="sl-indicator" />
-            <h2>Siège social de Prestige Auto</h2>
+            <h2>Siège social de {entreprise.denomination}</h2>
           </div>
           <div className="source-logos-v2">
             <span className="sl-logo-text">InseeM</span>
@@ -177,8 +178,8 @@ function FicheResumeContent({ onNavigate }: { onNavigate?: (page: 'fiche-resume'
               <div style={{ width: '12px', height: '12px', background: '#fff', borderRadius: '50%', transform: 'rotate(45deg)' }} />
             </div>
             <div style={{ background: 'rgba(255,255,255,0.95)', border: '1px solid #e0e0e0', borderRadius: '6px', padding: '8px 14px', fontSize: '13px', fontWeight: 700, color: '#161616', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', textAlign: 'center', maxWidth: '280px', lineHeight: 1.4 }}>
-              75 RUE DOURJACQ<br />
-              <span style={{ fontWeight: 400, color: '#555' }}>29200 BREST</span>
+              {entreprise.adresseLigne1}<br />
+              <span style={{ fontWeight: 400, color: '#555' }}>{entreprise.adresseLigne2}</span>
             </div>
           </div>
         </div>
@@ -188,29 +189,29 @@ function FicheResumeContent({ onNavigate }: { onNavigate?: (page: 'fiche-resume'
             <tr>
               <td>SIRET</td>
               <td>
-                <strong>800 219 830 00076</strong>
-                <CopyBtn value="80021983000076" />
+                <strong>{entreprise.siretFormate}</strong>
+                <CopyBtn value={entreprise.siret} />
               </td>
             </tr>
             <tr>
               <td>Adresse</td>
               <td>
-                <strong>75 RUE DOURJACQ<br />29200 BREST</strong>
+                <strong>{entreprise.adresseLigne1}<br />{entreprise.adresseLigne2}</strong>
                 <div style={{ marginTop: '6px' }}>
-                  <a href="https://maps.google.com/maps?q=75+Rue+Dourjacq+29200+Brest" target="_blank" rel="noopener" className="btn-outline-blue" style={{ fontSize: '12px', padding: '4px 10px' }}>
+                  <a href={entreprise.googleMapsUrl} target="_blank" rel="noopener" className="btn-outline-blue" style={{ fontSize: '12px', padding: '4px 10px' }}>
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" style={{ marginRight: '3px' }}><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" /></svg>
                     Voir sur Google Maps {EXT_ICON}
                   </a>
                 </div>
               </td>
             </tr>
-            <tr><td>Activité principale</td><td>Vente de voitures et pièces détachées</td></tr>
-            <tr><td>Date de création de l'établissement</td><td>05/11/2020</td></tr>
-            <tr><td>Numéro de voie</td><td>75</td></tr>
-            <tr><td>Type de voie</td><td>RUE</td></tr>
-            <tr><td>Libellé de voie</td><td>DOURJACQ</td></tr>
-            <tr><td>Libellé de la commune</td><td>BREST</td></tr>
-            <tr><td>Code postal</td><td>29200</td></tr>
+            <tr><td>Activité principale</td><td>{entreprise.activitePrincipale}</td></tr>
+            <tr><td>Date de création de l'établissement</td><td>{entreprise.dateCreation}</td></tr>
+            <tr><td>Numéro de voie</td><td>{entreprise.adresse.numeroVoie}</td></tr>
+            <tr><td>Type de voie</td><td>{entreprise.adresse.typeVoie}</td></tr>
+            <tr><td>Libellé de voie</td><td>{entreprise.adresse.libelleVoie}</td></tr>
+            <tr><td>Libellé de la commune</td><td>{entreprise.adresse.commune}</td></tr>
+            <tr><td>Code postal</td><td>{entreprise.adresse.codePostal}</td></tr>
           </tbody>
         </table>
       </section>
@@ -220,7 +221,7 @@ function FicheResumeContent({ onNavigate }: { onNavigate?: (page: 'fiche-resume'
         <div className="section-legal-v2-header" style={{ borderBottom: '1px solid #f0f0f0' }}>
           <div className="sl-title">
             <div className="sl-indicator" />
-            <h2>Tous les établissements de Prestige Auto</h2>
+            <h2>Tous les établissements de {entreprise.denomination}</h2>
           </div>
           <div className="source-logos-v2">
             <span className="sl-logo-text">InseeM</span>
@@ -240,16 +241,16 @@ function FicheResumeContent({ onNavigate }: { onNavigate?: (page: 'fiche-resume'
             <tbody>
               <tr>
                 <td style={{ padding: '16px 24px', verticalAlign: 'top' }}>
-                  <a href="#" onClick={(e) => { e.preventDefault(); onNavigate?.('index-fiche'); }} className="siret-link">800 219 830 00076</a>
+                  <a href="#" onClick={(e) => { e.preventDefault(); onNavigate?.('index-fiche'); }} className="siret-link">{entreprise.siretFormate}</a>
                 </td>
                 <td style={{ padding: '16px 24px', verticalAlign: 'top', fontSize: '14px', lineHeight: 1.4 }}>
-                  <strong>75 RUE DOURJACQ</strong><br />29200 BREST
+                  <strong>{entreprise.adresseLigne1}</strong><br />{entreprise.adresseLigne2}
                 </td>
                 <td style={{ padding: '16px 24px', verticalAlign: 'top', fontSize: '14px', lineHeight: 1.4 }}>
                   <span className="badge badge-gray" style={{ fontSize: '10px', marginBottom: '4px', textTransform: 'uppercase' }}>Siège social</span><br />
-                  Vente de voitures et pièces détachées
+                  {entreprise.activitePrincipale}
                 </td>
-                <td style={{ padding: '16px 24px', verticalAlign: 'top', fontSize: '14px' }}>05/11/2020</td>
+                <td style={{ padding: '16px 24px', verticalAlign: 'top', fontSize: '14px' }}>{entreprise.dateCreation}</td>
                 <td style={{ padding: '16px 24px', verticalAlign: 'top', textAlign: 'center' }}>
                   <span className="badge badge-green" style={{ fontSize: '11px' }}>En activité</span>
                 </td>
@@ -268,7 +269,7 @@ function DirigeantsSectionContent() {
       <div className="section-legal-v2-header" style={{ borderBottom: '1px solid #f0f0f0' }}>
         <div className="sl-title">
           <div className="sl-indicator" />
-          <h2>Dirigeants de Prestige Auto</h2>
+          <h2>Dirigeants de {entreprise.denomination}</h2>
         </div>
       </div>
 
@@ -303,8 +304,8 @@ function DirigeantsSectionContent() {
           </thead>
           <tbody>
             <tr>
-              <td className="role-cell">GÉRANT</td>
-              <td className="details-cell">Edouard GIACOMO, né(e) en mai 1969</td>
+              <td className="role-cell">{entreprise.dirigeant.role}</td>
+              <td className="details-cell">{entreprise.dirigeant.nom}, né(e) en {entreprise.dirigeant.naissance}</td>
               <td className="action-cell">
                 <a href="#" onClick={(e) => e.preventDefault()} className="link-arrow">→ voir ses entreprises</a>
               </td>
@@ -312,7 +313,7 @@ function DirigeantsSectionContent() {
           </tbody>
         </table>
         <div className="dirigeant-bloc-footer">
-          <span className="dirigeant-maj">Mise à jour le 19/06/2023</span>
+          <span className="dirigeant-maj">Mise à jour le {entreprise.dateMajDirigeant}</span>
           <a href="#" onClick={(e) => e.preventDefault()} className="source-btn-inpi">
             <span className="sl-logo-inpi" style={{ fontSize: '10px', padding: '1px 4px' }}>inpi</span>
             Source : INPI
@@ -346,7 +347,7 @@ function DirigeantsSectionContent() {
           Aucun DPO trouvé pour cette structure.
         </div>
         <div className="dirigeant-bloc-footer">
-          <span className="dirigeant-maj">Mise à jour le 19/01/2026</span>
+          <span className="dirigeant-maj">Mise à jour le {entreprise.dateMajDpo}</span>
           <a href="#" onClick={(e) => e.preventDefault()} className="source-btn-inpi" style={{ borderColor: '#003189', color: '#003189' }}>
             Source : CNIL
           </a>
@@ -369,7 +370,7 @@ export function FicheResumePage({ onNavigate }: FicheResumePageProps) {
     window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + url, '_blank', 'width=600,height=500');
   };
   const shareEmail = () => {
-    const subject = encodeURIComponent('Fiche résumé — Prestige Auto');
+    const subject = encodeURIComponent(`Fiche résumé — ${entreprise.denomination}`);
     const body = encodeURIComponent('Consulter la fiche sur : ' + window.location.href);
     window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
   };
@@ -383,7 +384,7 @@ export function FicheResumePage({ onNavigate }: FicheResumePageProps) {
 
           {/* HERO V2 */}
           <section className="hero-v2">
-            <h1 className="hero-title">Prestige Auto</h1>
+            <h1 className="hero-title">{entreprise.denomination}</h1>
 
             <div className="hero-unite-legale-bar">
               <span className="badge-wrapper-ul">
@@ -395,7 +396,7 @@ export function FicheResumePage({ onNavigate }: FicheResumePageProps) {
                 <span className="badge-label-ul">Unité légale</span>
               </span>
               <span className="ul-arrow">‣</span>
-              <span className="ul-siren">800 219 836</span>
+              <span className="ul-siren">{entreprise.sirenFormate}</span>
               <span className="badge-v2-green">en activité</span>
             </div>
 
@@ -418,12 +419,12 @@ export function FicheResumePage({ onNavigate }: FicheResumePageProps) {
 
             <div className="hero-resume-intro" style={{ marginTop: '16px' }}>
               <p>
-                La société <strong>Prestige Auto</strong> a été créée le <strong>5 novembre 2020</strong>, il y a 5 ans.
-                Son domaine d'activité est : vente de voitures et pièces détachées.
-                Elle est immatriculée au RNE depuis le <strong>19 juin 2023</strong>.
+                La société <strong>{entreprise.denomination}</strong> a été créée le <strong>{entreprise.dateCreationLongue}</strong>, il y a {entreprise.anciennete}.
+                Son domaine d'activité est : {entreprise.activitePrincipalePhrase}.
+                Elle est immatriculée au RNE depuis le <strong>{entreprise.dateImmatriculationRneLongue}</strong>.
               </p>
               <p>
-                Son <a href="#siege">siège social</a> est domicilié au <a href="#">75 RUE DOURJACQ 29200 BREST</a>.
+                Son <a href="#siege">siège social</a> est domicilié au <a href="#">{entreprise.adresseComplete}</a>.
                 Elle possède <a href="#etablissements">1 établissement</a> en activité.
               </p>
             </div>

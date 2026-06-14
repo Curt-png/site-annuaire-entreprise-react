@@ -2,6 +2,7 @@ import { useEffect, useCallback, useState } from 'react';
 import { SiteHeader } from '../components/SiteHeader';
 import { SiteFooter } from '../components/SiteFooter';
 import { BackToTop } from '../components/BackToTop';
+import { entreprise } from '../config/entreprise';
 
 /* ── helper copy ── */
 function useCopy() {
@@ -117,9 +118,9 @@ function LeafletMap() {
         popupAnchor: [0, -40],
       });
 
-      L.marker([48.3897, -4.4861], { icon: blueIcon })
+      L.marker([entreprise.adresse.latitude, entreprise.adresse.longitude], { icon: blueIcon })
         .addTo(map)
-        .bindPopup('<strong>Prestige Auto</strong><br>75 RUE DOURJACQ<br>29200 BREST');
+        .bindPopup(entreprise.carteMarkerPopup);
     };
 
     initMap();
@@ -149,7 +150,7 @@ export function IndexFichePage({ onNavigate }: IndexFichePageProps) {
     window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + url, '_blank', 'width=600,height=500');
   };
   const shareEmail = () => {
-    const subject = encodeURIComponent('Fiche établissement — Prestige Auto');
+    const subject = encodeURIComponent(`Fiche établissement — ${entreprise.denomination}`);
     const body = encodeURIComponent('Consulter la fiche sur : ' + window.location.href);
     window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
   };
@@ -170,14 +171,14 @@ export function IndexFichePage({ onNavigate }: IndexFichePageProps) {
           {/* HERO */}
           <section className="hero">
             <h1>
-              Établissement <strong>Prestige Auto</strong> à <a href="/commune/brest">BREST</a>
+              Établissement <strong>{entreprise.denomination}</strong> à <a href={`/commune/${entreprise.adresse.communeSlug}`}>{entreprise.adresse.commune}</a>
             </h1>
 
             <div className="hero-grid">
               {/* Colonne gauche */}
               <div className="hero-left">
                 <div className="hero-meta">
-                  <SiretBtn value="80021983000076" display="80021983000076" />
+                  <SiretBtn value={entreprise.siret} display={entreprise.siret} />
                   <span className="badge badge-green">EN ACTIVITÉ</span>
                 </div>
 
@@ -189,14 +190,14 @@ export function IndexFichePage({ onNavigate }: IndexFichePageProps) {
 
                 {/* Carte unité légale */}
                 <div className="unite-legale-card" style={{ marginTop: '12px' }}>
-                  <a href="#" onClick={(e) => { e.preventDefault(); onNavigate?.('fiche-resume'); }} className="card-title">Prestige Auto</a>
+                  <a href="#" onClick={(e) => { e.preventDefault(); onNavigate?.('fiche-resume'); }} className="card-title">{entreprise.denomination}</a>
                   <div className="card-meta">
                     <svg className="icon-building" viewBox="0 0 24 24" fill="#666">
                       <path d="M12 7V3H2v18h20V7H12zm-2 12H4v-2h6v2zm0-4H4v-2h6v2zm0-4H4V9h6v2zm0-4H4V5h6v2zm10 12h-8V9h8v10zm-2-8h-4v2h4v-2zm0 4h-4v2h4v-2z" />
                     </svg>
                     <span>Unité légale</span>
                     <span className="sep">·</span>
-                    <SiretBtn value="800219836" display="800 219 836" />
+                    <SiretBtn value={entreprise.siren} display={entreprise.sirenFormate} />
                     <span className="badge badge-green">EN ACTIVITÉ</span>
                   </div>
                   <ul className="card-links">
@@ -236,16 +237,16 @@ export function IndexFichePage({ onNavigate }: IndexFichePageProps) {
             <p>
               Cet établissement
               <InfoTooltip text="Un établissement est une unité de production géographiquement individualisée, mais juridiquement dépendante de l'unité légale." />,
-              immatriculé sous le siret 80021983000076, est <strong>en activité</strong>. Il a été créé le <strong>5 novembre 2020</strong>, il y a 5 ans.
-              C'est le siège social de la société <a href="#" onClick={(e) => { e.preventDefault(); onNavigate?.('fiche-resume'); }}>Prestige Auto</a>.
+              immatriculé sous le siret {entreprise.siret}, est <strong>en activité</strong>. Il a été créé le <strong>{entreprise.dateCreationLongue}</strong>, il y a {entreprise.anciennete}.
+              C'est le siège social de la société <a href="#" onClick={(e) => { e.preventDefault(); onNavigate?.('fiche-resume'); }}>{entreprise.denomination}</a>.
             </p>
-            <p>Son domaine d'activité est : vente de voitures et pièces détachées. Il est domicilié au 75 RUE DOURJACQ 29200 BREST.</p>
+            <p>Son domaine d'activité est : {entreprise.activitePrincipalePhrase}. Il est domicilié au {entreprise.adresseComplete}.</p>
           </section>
 
           {/* SECTION INFORMATIONS LÉGALES */}
           <section className="section-legal">
             <div className="section-legal-header">
-              <h2>Information légales de l'établissement Prestige Auto à BREST</h2>
+              <h2>Information légales de l'établissement {entreprise.denomination} à {entreprise.adresse.commune}</h2>
               <div className="source-logos">
                 <span className="source-logo insee">InseeM</span>
                 <span className="source-logo vies">EU</span>
@@ -259,8 +260,8 @@ export function IndexFichePage({ onNavigate }: IndexFichePageProps) {
                   <td>Dénomination de la société</td>
                   <td>
                     <div className="cell-value">
-                      <span className="val">Prestige Auto</span>
-                      <CopyIconBtn value="Prestige Auto" label="Copier la dénomination" />
+                      <span className="val">{entreprise.denomination}</span>
+                      <CopyIconBtn value={entreprise.denomination} label="Copier la dénomination" />
                     </div>
                   </td>
                 </tr>
@@ -279,8 +280,8 @@ export function IndexFichePage({ onNavigate }: IndexFichePageProps) {
                   <td>Nom de l'établissement</td>
                   <td>
                     <div className="cell-value">
-                      <span className="val">Prestige Auto</span>
-                      <CopyIconBtn value="Prestige Auto" />
+                      <span className="val">{entreprise.denomination}</span>
+                      <CopyIconBtn value={entreprise.denomination} />
                     </div>
                   </td>
                 </tr>
@@ -292,8 +293,8 @@ export function IndexFichePage({ onNavigate }: IndexFichePageProps) {
                   </td>
                   <td>
                     <div className="cell-value">
-                      <span className="val">75 RUE DOURJACQ 29200 BREST</span>
-                      <CopyIconBtn value="75 RUE DOURJACQ 29200 BREST" />
+                      <span className="val">{entreprise.adresseComplete}</span>
+                      <CopyIconBtn value={entreprise.adresseComplete} />
                     </div>
                   </td>
                 </tr>
@@ -302,8 +303,8 @@ export function IndexFichePage({ onNavigate }: IndexFichePageProps) {
                   <td>SIRET</td>
                   <td>
                     <div className="cell-value">
-                      <span className="val">80021983000076</span>
-                      <CopyIconBtn value="80021983000076" />
+                      <span className="val">{entreprise.siret}</span>
+                      <CopyIconBtn value={entreprise.siret} />
                     </div>
                   </td>
                 </tr>
@@ -312,8 +313,8 @@ export function IndexFichePage({ onNavigate }: IndexFichePageProps) {
                   <td>Clef NIC</td>
                   <td>
                     <div className="cell-value">
-                      <span className="val">00076</span>
-                      <CopyIconBtn value="00076" />
+                      <span className="val">{entreprise.clefNic}</span>
+                      <CopyIconBtn value={entreprise.clefNic} />
                     </div>
                   </td>
                 </tr>
@@ -332,8 +333,8 @@ export function IndexFichePage({ onNavigate }: IndexFichePageProps) {
                   <td>Activité principale de la société (NAF/APE)</td>
                   <td>
                     <div className="cell-value">
-                      <span className="val">Vente de voitures et pièces détachées</span>
-                      <CopyIconBtn value="Vente de voitures et pièces détachées" />
+                      <span className="val">{entreprise.activitePrincipale}</span>
+                      <CopyIconBtn value={entreprise.activitePrincipale} />
                     </div>
                   </td>
                 </tr>
@@ -342,8 +343,8 @@ export function IndexFichePage({ onNavigate }: IndexFichePageProps) {
                   <td>Activité principale de l'établissement (NAF/APE)</td>
                   <td>
                     <div className="cell-value">
-                      <span className="val">Vente de voitures et pièces détachées</span>
-                      <CopyIconBtn value="Vente de voitures et pièces détachées" />
+                      <span className="val">{entreprise.activitePrincipale}</span>
+                      <CopyIconBtn value={entreprise.activitePrincipale} />
                     </div>
                   </td>
                 </tr>
@@ -352,8 +353,8 @@ export function IndexFichePage({ onNavigate }: IndexFichePageProps) {
                   <td>Code NAF/APE de l'établissement</td>
                   <td>
                     <div className="cell-value">
-                      <span className="val">77.11A</span>
-                      <CopyIconBtn value="77.11A" />
+                      <span className="val">{entreprise.codeNaf}</span>
+                      <CopyIconBtn value={entreprise.codeNaf} />
                     </div>
                   </td>
                 </tr>
@@ -375,8 +376,8 @@ export function IndexFichePage({ onNavigate }: IndexFichePageProps) {
                   <td>Forme juridique</td>
                   <td>
                     <div className="cell-value">
-                      <span className="val">SAS, société par actions simplifiée</span>
-                      <CopyIconBtn value="SAS, société par actions simplifiée" />
+                      <span className="val">{entreprise.formeJuridique}</span>
+                      <CopyIconBtn value={entreprise.formeJuridique} />
                     </div>
                   </td>
                 </tr>
@@ -385,8 +386,8 @@ export function IndexFichePage({ onNavigate }: IndexFichePageProps) {
                   <td>Date de création de la société</td>
                   <td>
                     <div className="cell-value">
-                      <span className="val">05/11/2020</span>
-                      <CopyIconBtn value="05/11/2020" />
+                      <span className="val">{entreprise.dateCreation}</span>
+                      <CopyIconBtn value={entreprise.dateCreation} />
                     </div>
                   </td>
                 </tr>
@@ -395,8 +396,8 @@ export function IndexFichePage({ onNavigate }: IndexFichePageProps) {
                   <td>Date de création de l'établissement</td>
                   <td>
                     <div className="cell-value">
-                      <span className="val">05/11/2020</span>
-                      <CopyIconBtn value="05/11/2020" />
+                      <span className="val">{entreprise.dateCreation}</span>
+                      <CopyIconBtn value={entreprise.dateCreation} />
                     </div>
                   </td>
                 </tr>
@@ -444,7 +445,7 @@ export function IndexFichePage({ onNavigate }: IndexFichePageProps) {
             </table>
 
             <div className="section-legal-footer">
-              <span>Mise à jour le 15/05/2026</span>
+              <span>Mise à jour le {entreprise.dateMajFiche}</span>
               <a href="/sources">ℹ Sources : INSEE, VIES</a>
             </div>
           </section>
